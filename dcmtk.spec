@@ -17,6 +17,7 @@ Patch3:		dcmtk-3.6.0-suse-Use-system-charls.patch
 Patch4:		dcmtk-3.6.0-suse-Fixed-includes-for-CharLS-1.0.patch
 Patch5:		dcmtk-3.6.0-suse-Add-soname-generation-for-modules-which-are-not-in-D.patch
 Patch6:		dcmtk-3.6.0-mdv-dont-build-libcharls.patch
+BuildRequires:	cmake
 BuildRequires:	zlib-devel
 BuildRequires:	libpng-devel
 BuildRequires:	tiff-devel
