@@ -40,6 +40,7 @@ variety of purposes ranging from being a tool for product testing to being
 a building block for research projects, prototypes and commercial products.
 
 %package -n %{libname}
+Summary:	DICOM libraries
 Group:		System/Libraries
 
 %description -n %{libname}
@@ -54,6 +55,7 @@ software.
 This package contains shared libraries.
 
 %package -n %{develname}
+Summary:	DICOM libraries development files
 Group:		Development/C
 Provides:	%{name}-devel = %{EVRD}
 Requires:	%{libname} = %{version}
