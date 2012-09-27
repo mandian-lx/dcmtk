@@ -17,6 +17,7 @@ Patch3:		dcmtk-3.6.0-suse-Use-system-charls.patch
 Patch4:		dcmtk-3.6.0-suse-Fixed-includes-for-CharLS-1.0.patch
 Patch5:		dcmtk-3.6.0-suse-Add-soname-generation-for-modules-which-are-not-in-D.patch
 Patch6:		dcmtk-3.6.0-mdv-dont-build-libcharls.patch
+Patch7:		dcmtk-3.6.0-upstream-gcc47.patch
 BuildRequires:	cmake
 BuildRequires:	zlib-devel
 BuildRequires:	libpng-devel
@@ -81,6 +82,7 @@ This package contains files required for development only.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 %build
 %cmake
@@ -96,7 +98,6 @@ mv %{buildroot}%{_prefix}/etc %{buildroot}/
 %files
 %{_bindir}/*
 %config(noreplace) %{_sysconfdir}/%{name}/*.cfg
-%dir %{_datadir}/dcmtk
 %{_datadir}/dcmtk
 %doc %{_defaultdocdir}/dcmtk/*
 
