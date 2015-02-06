@@ -4,7 +4,7 @@
 
 Name:		dcmtk
 Version:	3.6.0
-Release:	1
+Release:	2
 Summary:	DICOM libraries and applications
 Group:		System/Libraries
 License:	BSD and MIT
