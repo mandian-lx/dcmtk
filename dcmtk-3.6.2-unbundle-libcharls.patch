@@ -1,0 +1,101 @@
+diff --git a/CMake/3rdparty.cmake b/CMake/3rdparty.cmake
+--- a/CMake/3rdparty.cmake
++++ b/CMake/3rdparty.cmake
+@@ -268,6 +268,19 @@
+       SET(WRAP_LIBS ${WRAP_LIBRARIES})
+     ENDIF(NOT WRAP_FOUND)
+   ENDIF(DCMTK_WITH_WRAP)
++  
++  # Find libCcharls
++  IF(DCMTK_WITH_CHARLS)
++    FIND_PACKAGE(CharLS REQUIRED)
++    MESSAGE("include: ${CHARLS_INCLUDE_DIRS})
++    MESSAGE("libs: ${CHARLS_LIBS})
++    IF(NOT CHARLS_FOUND)
++      MESSAGE(STATUS "Error: CharLS was not found.")
++    ELSE(NOT CHARLS_FOUND)
++      INCLUDE_DIRECTORIES(${CHARLS_INCLUDE_DIRS})
++      SET(CHARLS_LIBS ${CHARLS_LIBRARIES})
++    ENDIF(NOT CHARLS_FOUND)
++  ENDIF(DCMTK_WITH_CHARLS)
+ 
+ ENDIF()
+ 
+--- /dev/null
++++ b/CMake/FindCharLS.cmake
+@@ -0,0 +1,33 @@
++# Find CharLS library
++#
++# Released under BSD license
++#
++#  CHARLS_INCLUDE_DIRS - where to find tcpd.h, etc
++#  CHARLS_LIBRARIES    - Lists of libraries when using libcharls
++#  CHARLS_FOUND        - True if charls found
++
++INCLUDE(FindPackageHandleStandardArgs)
++
++# Look for the header file
++FIND_PATH(CHARLS_INCLUDE_DIR NAMES CharLS/interface.h /usr/include /usr/include/CharLS)
++MARK_AS_ADVANCED(CHARLS_INCLUDE_DIR)
++
++# Look for the library
++SET(CHARLS_LIBS charls)
++FIND_LIBRARY(CHARLS_LIBRARY NAMES ${CHARLS_LIBS})
++MARK_AS_ADVANCED(CHARLS_LIBRARY)
++
++FIND_PACKAGE_HANDLE_STANDARD_ARGS(CHARLS REQUIRED_VARS CHARLS_LIBRARY CHARLS_INCLUDE_DIR)
++
++# Copy the result to output variables
++IF(CHARLS_FOUND)
++  SET(CHARLS_LIBRARIES ${CHARLS_LIBRARY})
++  SET(CHARLS_INCLUDE_DIRS ${CHARLS_INCLUDE_DIR})
++ELSE(CHARLS_FOUND)
++  SET(CHARLS_LIBS)
++  SET(CHARLS_LIBRARY)
++  SET(CHARLS_LIBRARIES)
++  SET(CHARLS_INCLUDE_DIR)
++  SET(CHARLS_INCLUDE_DIRS)
++ENDIF(CHARLS_FOUND)
++
+--- a/CMake/dcmtkPrepare.cmake
++++ b/CMake/dcmtkPrepare.cmake
+@@ -79,6 +79,7 @@
+ ENDIF(BUILD_SINGLE_SHARED_LIBRARY)
+ 
+ # DCMTK build options
++OPTION(DCMTK_WITH_CHARLS "Configure DCMTK with support for CharLS." ON)
+ OPTION(DCMTK_WITH_TIFF "Configure DCMTK with support for TIFF." ON)
+ OPTION(DCMTK_WITH_PNG "Configure DCMTK with support for PNG." ON)
+ OPTION(DCMTK_WITH_XML "Configure DCMTK with support for XML." ON)
+--- a/dcmjpls/apps/CMakeLists.txt
++++ b/dcmjpls/apps/CMakeLists.txt
+@@ -8,5 +8,5 @@
+ 
+ # make sure executables are linked to the corresponding libraries
+ FOREACH(PROGRAM dcmcjpls dcmdjpls dcml2pnm)
+-  DCMTK_TARGET_LINK_MODULES(${PROGRAM} dcmjpls charls dcmimage dcmimgle dcmdata oflog ofstd ofstd)
++  DCMTK_TARGET_LINK_MODULES(${PROGRAM} dcmjpls ${CHARLS_LIBS} dcmimage dcmimgle dcmdata oflog ofstd ofstd)
+ ENDFOREACH(PROGRAM)
+--- a/dcmjpls/libsrc/CMakeLists.txt
++++ b/dcmjpls/libsrc/CMakeLists.txt
+@@ -1,7 +1,7 @@
+ # declare additional include directories
+-INCLUDE_DIRECTORIES("${dcmjpls_SOURCE_DIR}/include" "${ofstd_SOURCE_DIR}/include" "${oflog_SOURCE_DIR}/include" "${dcmdata_SOURCE_DIR}/include" "${dcmimgle_SOURCE_DIR}/include" "${dcmimage_SOURCE_DIR}/include" "${dcmjpls_SOURCE_DIR}/libcharls" ${ZLIB_INCDIR})
++INCLUDE_DIRECTORIES("${dcmjpls_SOURCE_DIR}/include" "${ofstd_SOURCE_DIR}/include" "${oflog_SOURCE_DIR}/include" "${dcmdata_SOURCE_DIR}/include" "${dcmimgle_SOURCE_DIR}/include" "${dcmimage_SOURCE_DIR}/include" ${CHARLS_INCDIR} ${ZLIB_INCDIR})
+ 
+ # create library from source files
+ DCMTK_ADD_LIBRARY(dcmjpls djcparam djdecode djencode djrparam djcodecd djutils djcodece)
+ 
+-DCMTK_TARGET_LINK_MODULES(dcmjpls ofstd oflog dcmdata dcmimgle dcmimage charls)
++DCMTK_TARGET_LINK_MODULES(dcmjpls ofstd oflog dcmdata dcmimgle dcmimage ${CHARLS_LIBS})
+--- a/dcmjpls/CMakeLists.txt
++++ b/dcmjpls/CMakeLists.txt
+@@ -2,6 +2,6 @@
+ PROJECT(dcmjpls)
+ 
+ # recurse into subdirectories
+-FOREACH(SUBDIR libsrc libcharls apps include)
++FOREACH(SUBDIR libsrc apps include)
+   ADD_SUBDIRECTORY(${SUBDIR})
+ ENDFOREACH(SUBDIR)
+

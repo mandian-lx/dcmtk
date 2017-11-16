@@ -1,0 +1,20 @@
+--- a/dcmjpls/libsrc/djcodece.cc
++++ b/dcmjpls/libsrc/djcodece.cc
+@@ -664,7 +664,7 @@
+ 
+     size_t bytesWritten = 0;
+ 
+-    JLS_ERROR err = JpegLsEncode(&buffer, &size, &bytesWritten, framePointer, frameSize, &jls_params);
++    JLS_ERROR err = JpegLsEncode(&buffer, size, &bytesWritten, framePointer, frameSize, &jls_params);
+     result = DJLSError::convert(err);
+ 
+     if (result.good())
+@@ -1055,7 +1055,7 @@
+ 
+   size_t bytesWritten = 0;
+ 
+-  JLS_ERROR err = JpegLsEncode(&compressed_buffer, &compressed_buffer_size, &bytesWritten, framePointer, buffer_size, &jls_params);
++  JLS_ERROR err = JpegLsEncode(&compressed_buffer, compressed_buffer_size, &bytesWritten, framePointer, buffer_size, &jls_params);
+   result = DJLSError::convert(err);
+ 
+   if (result.good())

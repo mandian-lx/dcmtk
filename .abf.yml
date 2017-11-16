@@ -1,2 +1,5 @@
+removed_sources:
+  dcmtk-3.6.0.tar.gz: 469e017cffc56f36e834aa19c8612111f964f757
 sources:
-  "dcmtk-3.6.0.tar.gz": 469e017cffc56f36e834aa19c8612111f964f757
+  DCMTK-3.6.2.tar.gz: 35d47be79b33883d57dd3cf6f9fbe29e324a38b7
+
