@@ -39,7 +39,7 @@ diff --git a/CMake/3rdparty.cmake b/CMake/3rdparty.cmake
 +MARK_AS_ADVANCED(CHARLS_INCLUDE_DIR)
 +
 +# Look for the library
-+SET(CHARLS_LIBS charls)
++SET(CHARLS_LIBS CharLS)
 +FIND_LIBRARY(CHARLS_LIBRARY NAMES ${CHARLS_LIBS})
 +MARK_AS_ADVANCED(CHARLS_LIBRARY)
 +
