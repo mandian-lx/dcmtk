@@ -12,7 +12,7 @@ diff --git a/CMake/3rdparty.cmake b/CMake/3rdparty.cmake
 +    MESSAGE("include: ${CHARLS_INCLUDE_DIRS})
 +    MESSAGE("libs: ${CHARLS_LIBS})
 +    IF(NOT CHARLS_FOUND)
-+      MESSAGE(STATUS "Error: CharLS was not found.")
++      MESSAGE(FALAT_ERROR "CharLS was not found.")
 +    ELSE(NOT CHARLS_FOUND)
 +      INCLUDE_DIRECTORIES(${CHARLS_INCLUDE_DIRS})
 +      SET(CHARLS_LIBS ${CHARLS_LIBRARIES})
@@ -35,7 +35,7 @@ diff --git a/CMake/3rdparty.cmake b/CMake/3rdparty.cmake
 +INCLUDE(FindPackageHandleStandardArgs)
 +
 +# Look for the header file
-+FIND_PATH(CHARLS_INCLUDE_DIR NAMES CharLS/interface.h /usr/include /usr/include/CharLS)
++FIND_PATH(CHARLS_INCLUDE_DIR NAMES interface.h /usr/include /usr/include/CharLS)
 +MARK_AS_ADVANCED(CHARLS_INCLUDE_DIR)
 +
 +# Look for the library

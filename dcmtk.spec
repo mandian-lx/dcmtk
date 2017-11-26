@@ -17,12 +17,12 @@ Patch1:		%{name}-3.6.2-fix-type.patch
 Patch2:		%{name}-3.6.2-unbundle-libcharls.patch
 
 BuildRequires:	cmake
-BuildRequires:	zlib-devel
-BuildRequires:	libpng-devel
-BuildRequires:	tiff-devel
-BuildRequires:	libxml2-devel
-BuildRequires:	wrap-devel
 BuildRequires:	CharLS-devel
+BuildRequires:	libpng-devel
+BuildRequires:	libxml2-devel
+BuildRequires:	tiff-devel
+BuildRequires:	wrap-devel
+BuildRequires:	zlib-devel
 
 %description
 DCMTK is a collection of libraries and applications implementing large parts
